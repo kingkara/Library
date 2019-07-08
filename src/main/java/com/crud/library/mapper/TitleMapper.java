@@ -4,6 +4,8 @@ import com.crud.library.domain.Title;
 import com.crud.library.domain.TitleDto;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 @Component
 public class TitleMapper {
     public Title mapToTitle(final TitleDto titleDto) {
@@ -12,7 +14,7 @@ public class TitleMapper {
                 titleDto.getTitle(),
                 titleDto.getAuthor(),
                 titleDto.getYearOfPublish(),
-                titleDto.getBookList());
+                new ArrayList<>());
     }
 
     public TitleDto mapToTitleDto(final Title title) {
@@ -20,8 +22,7 @@ public class TitleMapper {
                 title.getTitleId(),
                 title.getTitle(),
                 title.getAuthor(),
-                title.getYearOfPublish(),
-                title.getBooksList()
+                title.getYearOfPublish()
         );
     }
 }

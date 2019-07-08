@@ -38,6 +38,5 @@ public class Title {
    mappedBy = "title",
    cascade = CascadeType.ALL,
    fetch = FetchType.LAZY)
-   @JsonManagedReference
    private List<Book> booksList;
 }

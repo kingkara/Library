@@ -1,6 +1,5 @@
 package com.crud.library.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +22,6 @@ public class Book {
 
     @ManyToOne
     @JoinColumn(name = "titles_id")
-    @JsonBackReference
     @NotNull
     private Title title;
 
@@ -31,5 +29,11 @@ public class Book {
     @NotNull
     private String status;
 
+    public void borrowBook() {
+        this.status = "borrowed";
+    }
 
+    public void returnBook() {
+        this.status = "available";
+    }
 }
