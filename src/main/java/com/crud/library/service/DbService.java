@@ -11,10 +11,11 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.crud.library.domain.Constant.AVAILABLE;
+
 
 @Service
 public class DbService {
-    private static final String AVAILABLE = "available";
 
     @Autowired
     private UserRepository userRepository;
@@ -81,7 +82,7 @@ public class DbService {
         borrowRepository.deleteById(id);
     }
 
-    public Borrow createBorrow(final String title, final long userId) {
+    public void createBorrow(final String title, final long userId) {
         List<Book> books = (getAvailableBooks(title));
         User user = getUser(userId);
 
@@ -93,10 +94,9 @@ public class DbService {
                 borrow.setBook(book);
                 borrow.setDateOfBorrow(LocalDate.now());
                 borrow.setDateOfReturn(LocalDate.now().plusDays(30));
-                return borrow;
+                addBorrow(borrow);
             }
         }
-        return null;
     }
 
     public void returnBook(final Borrow borrow, final long borrowId) {
@@ -104,6 +104,9 @@ public class DbService {
             Book book = borrow.getBook();
             book.returnBook();
             deleteBorrow(borrowId);
+            if (book.getStatus()==AVAILABLE) {
+                System.out.println("Book returned successfully");
+            }
         }
     }
 

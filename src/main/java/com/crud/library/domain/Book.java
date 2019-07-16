@@ -8,6 +8,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import static com.crud.library.domain.Constant.AVAILABLE;
+import static com.crud.library.domain.Constant.BORROWED;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -30,10 +33,10 @@ public class Book {
     private String status;
 
     public void borrowBook() {
-        this.status = "borrowed";
+        this.status = BORROWED;
     }
 
     public void returnBook() {
-        this.status = "available";
+        this.status = AVAILABLE;
     }
 }
