@@ -23,30 +23,16 @@ public class BorrowController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "borrowBook")
     public void borrowBook(@RequestParam String title, long userId) {
-        List<Book> books = (service.getAvailableBooks(title));
-        User user = service.getUser(userId);
+        Borrow borrow = service.createBorrow(title, userId);
+        service.addBorrow(borrow);
 
-        for(Book book: books) {
-            if (book.getStatus().equals("available")) {
-                book.borrowBook();
-                Borrow borrow = new Borrow();
-                borrow.setUser(user);
-                borrow.setBook(book);
-                borrow.setDateOfBorrow(LocalDate.now());
-                borrow.setDateOfReturn(LocalDate.now().plusDays(30));
-                service.addBorrow(borrow);
-            }
-        }
+
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "returnBook")
     public void returnBook (@RequestParam long borrowId) {
         Borrow borrow = service.getBorrow(borrowId);
-        if(borrow!=null) {
-            Book book = borrow.getBook();
-            book.returnBook();
-            service.deleteBorrow(borrowId);
-        }
+        service.returnBook(borrow, borrowId);
 
     }
 }
